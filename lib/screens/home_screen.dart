@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/settings_provider.dart';
 import 'mapillary_search_screen.dart';
+import 'map_search_screen.dart';
 import 'analysis_screen.dart';
 import 'settings_screen.dart';
 import 'data_export_screen.dart';
@@ -150,9 +151,23 @@ class HomeContentScreen extends StatelessWidget {
               const SizedBox(height: 16),
 
               _FeatureCard(
+                icon: Icons.location_on,
+                title: '地図で検索',
+                description: '地図上で検索エリアを指定 - 地点+半径、矩形、ポリゴン',
+                color: Colors.red,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MapSearchScreen()),
+                  );
+                },
+              ),
+              const SizedBox(height: 12),
+
+              _FeatureCard(
                 icon: Icons.map,
-                title: 'Mapillary Images',
-                description: 'Search street view images by location, area, or custom polygon',
+                title: 'テキスト検索',
+                description: '座標入力でMapillary画像を検索',
                 color: Colors.blue,
                 onTap: () {
                   // Navigate to Mapillary tab
@@ -163,7 +178,7 @@ class HomeContentScreen extends StatelessWidget {
               _FeatureCard(
                 icon: Icons.psychology,
                 title: 'AI Analysis',
-                description: 'Analyze images with custom Gemini AI prompts',
+                description: 'Gemini AIで画像を分析',
                 color: Colors.purple,
                 onTap: () {
                   // Navigate to Analysis tab
@@ -174,7 +189,7 @@ class HomeContentScreen extends StatelessWidget {
               _FeatureCard(
                 icon: Icons.download,
                 title: 'Data Export',
-                description: 'Export EXIF and metadata to JSON/Excel formats',
+                description: 'JSON/Excel形式でエクスポート',
                 color: Colors.green,
                 onTap: () {
                   // Navigate to Export tab
