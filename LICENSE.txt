@@ -1,0 +1,162 @@
+MIT License
+
+Copyright (c) 2025 MapAnalyzer Project
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+Third-Party Licenses
+--------------------
+
+This application uses the following third-party packages:
+
+1. Flutter Framework
+   License: BSD 3-Clause License
+   https://github.com/flutter/flutter/blob/master/LICENSE
+
+2. http (Dart HTTP package)
+   License: BSD 3-Clause License
+   https://github.com/dart-lang/http/blob/master/LICENSE
+
+3. path_provider
+   License: BSD 3-Clause License
+   https://github.com/flutter/packages/blob/main/packages/path_provider/LICENSE
+
+4. excel
+   License: MIT License
+   https://github.com/justkawal/excel/blob/master/LICENSE
+
+5. json_annotation
+   License: BSD 3-Clause License
+   https://github.com/google/json_serializable.dart/blob/master/LICENSE
+
+6. image
+   License: MIT License
+   https://github.com/brendan-duncan/image/blob/main/LICENSE
+
+7. exif
+   License: BSD 3-Clause License
+   https://github.com/bigflood/exif-dart/blob/master/LICENSE
+
+8. geolocator
+   License: MIT License
+   https://github.com/Baseflow/flutter-geolocator/blob/main/geolocator/LICENSE
+
+9. geocoding
+   License: MIT License
+   https://github.com/Baseflow/flutter-geocoding/blob/main/geocoding/LICENSE
+
+10. latlong2
+    License: Apache License 2.0
+    https://github.com/dart-league/latlong/blob/master/LICENSE
+
+11. file_picker
+    License: MIT License
+    https://github.com/miguelpruivo/flutter_file_picker/blob/master/LICENSE
+
+12. shared_preferences
+    License: BSD 3-Clause License
+    https://github.com/flutter/packages/blob/main/packages/shared_preferences/LICENSE
+
+13. hive
+    License: Apache License 2.0
+    https://github.com/hivedb/hive/blob/master/hive/LICENSE
+
+14. hive_flutter
+    License: Apache License 2.0
+    https://github.com/hivedb/hive/blob/master/hive_flutter/LICENSE
+
+15. provider
+    License: MIT License
+    https://github.com/rrousselGit/provider/blob/master/LICENSE
+
+16. flutter_map
+    License: BSD 3-Clause License
+    https://github.com/fleaflet/flutter_map/blob/master/LICENSE
+
+17. url_launcher
+    License: BSD 3-Clause License
+    https://github.com/flutter/packages/blob/main/packages/url_launcher/LICENSE
+
+---
+
+API Usage Notices
+-----------------
+
+This application integrates with the following third-party APIs:
+
+1. Mapillary API
+   - Website: https://www.mapillary.com/
+   - Terms of Service: https://www.mapillary.com/terms
+   - Privacy Policy: https://www.mapillary.com/privacy
+   - Note: Users must obtain their own API key from Mapillary
+
+2. Google Gemini API
+   - Website: https://ai.google.dev/
+   - Terms of Service: https://ai.google.dev/terms
+   - Privacy Policy: https://policies.google.com/privacy
+   - Note: Users must obtain their own API key from Google AI Studio
+
+Users are responsible for complying with the terms of service and usage
+policies of these third-party services.
+
+---
+
+OpenStreetMap Attribution
+--------------------------
+
+Map tiles are provided by OpenStreetMap contributors.
+© OpenStreetMap contributors
+https://www.openstreetmap.org/copyright
+
+OpenStreetMap data is available under the Open Database License (ODbL):
+https://opendatacommons.org/licenses/odbl/
+
+Map tiles © OpenStreetMap contributors
+Used under the Creative Commons Attribution-ShareAlike 2.0 license (CC BY-SA):
+https://creativecommons.org/licenses/by-sa/2.0/
+
+---
+
+Disclaimer
+----------
+
+THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED. THE AUTHORS AND COPYRIGHT HOLDERS SHALL NOT BE LIABLE FOR ANY CLAIM,
+DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THIS SOFTWARE.
+
+Users are responsible for:
+- Obtaining necessary API keys from third-party services
+- Complying with API usage limits and terms of service
+- Ensuring data privacy and security when exporting data
+- Validating accuracy of geolocation and AI analysis results
+
+---
+
+Contact
+-------
+
+For questions or issues regarding this software:
+- GitHub: https://github.com/geomatsuyama/Maptag
+- Issues: https://github.com/geomatsuyama/Maptag/issues
+
+---
+
+Last Updated: December 2025

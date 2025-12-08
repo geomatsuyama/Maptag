@@ -47,19 +47,32 @@ Map Analyzerは、Mapillary APIから大量のストリートビュー画像メ�
 ### 💻 Windowsインストーラー (推奨)
 **🎯 最も簡単な方法**: ワンクリックインストール!
 
-1. **[Releases](https://github.com/geomatsuyama/Maptag/releases)** から最新の `MapAnalyzer_Setup_v1.0.0.exe` をダウンロード
-2. インストーラーを実行
-3. Map Analyzerを起動
+1. **[Releases](https://github.com/geomatsuyama/Maptag/releases)** から最新の `MapAnalyzer_Setup_v1.0.0_x64.exe` をダウンロード
+2. インストーラーを実行 (管理者権限が必要)
+3. セットアップウィザードに従ってインストール
+4. スタートメニューから Map Analyzer を起動
+
+**システム要件**:
+- Windows 10 (1809以上) または Windows 11
+- 64-bit (x64) アーキテクチャ
+- RAM: 8GB以上推奨
+- ディスク: 500MB以上の空き容量
+- Visual C++ Redistributable 2015-2022 (自動チェック)
 
 **特徴**:
 - ✅ ワンクリックインストール
+- ✅ 日本語/英語対応
 - ✅ スタートメニュー登録
 - ✅ デスクトップショートカット
-- ✅ アンインストーラー付属
+- ✅ 簡単アンインストール
+- ✅ Visual C++ Redistributable チェック機能
+- ✅ レジストリ登録とファイル関連付け
 
-**ドキュメント**:
-- 📖 [Windows_インストーラー_クイックスタート.md](Windows_インストーラー_クイックスタート.md) - 3ステップで完成!
-- 📖 [Windows_Installer_Guide.md](Windows_Installer_Guide.md) - 詳細ガイド
+**📚 インストーラー関連ドキュメント**:
+- 📖 **[WINDOWS_INSTALLER_QUICK_START.md](installer/WINDOWS_INSTALLER_QUICK_START.md)** - 5分で完了!クイックガイド
+- 📖 **[BUILD_INSTALLER.md](installer/BUILD_INSTALLER.md)** - インストーラーのビルド方法 (開発者向け)
+- 📖 **[INSTALLER_FAQ.md](installer/INSTALLER_FAQ.md)** - よくある質問と回答
+- 📖 **[推奨スペック.md](推奨スペック.md)** - システム要件とパフォーマンスガイド
 
 ### 🌐 Webバージョン
 **今すぐアクセス**: https://5060-i6w1gve4ssf8ly2hkqauq-02b9cc79.sandbox.novita.ai
@@ -315,22 +328,44 @@ flutter run -d linux    # Linux
 Windowsインストーラーを自分でビルドする場合:
 
 ### 必要なツール
-- Flutter SDK 3.35.4
+- Flutter SDK 3.35.4以上
+- Visual Studio 2022 (C++ desktop development)
 - Inno Setup 6 (無料): https://jrsoftware.org/isdl.php
 
-### ビルドコマンド
-```powershell
-# Windowsマシンで実行
+### ビルド手順 (Windows PCで実行)
+
+**ステップ1: Flutterアプリのビルド**
+```bash
 git clone https://github.com/geomatsuyama/Maptag.git
 cd Maptag
 
-# 自動ビルドスクリプト実行
-.\build_installer.ps1
+# 依存関係インストール
+flutter pub get
+
+# Windowsリリースビルド (5-10分)
+flutter build windows --release
 ```
 
-**出力**: `installer_output\MapAnalyzer_Setup_v1.0.0.exe`
+**ステップ2: Inno Setupでインストーラー作成**
 
-詳細は [Windows_Installer_Guide.md](Windows_Installer_Guide.md) を参照してください。
+**方法A: GUI (推奨・初心者向け)**
+1. Inno Setup Compiler を起動
+2. `File` → `Open` → `Maptag/installer/windows_installer.iss`
+3. `Build` → `Compile` (F9キー)
+4. 完了!
+
+**方法B: コマンドライン (自動化向け)**
+```powershell
+# PowerShellで実行
+& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "installer\windows_installer.iss"
+```
+
+**出力先**: `installer/output/MapAnalyzer_Setup_v1.0.0_x64.exe` (約25-30MB)
+
+**🔍 詳細ドキュメント**:
+- 📖 [BUILD_INSTALLER.md](installer/BUILD_INSTALLER.md) - 完全ビルドガイド (自動化、トラブルシューティング)
+- 📖 [WINDOWS_INSTALLER_QUICK_START.md](installer/WINDOWS_INSTALLER_QUICK_START.md) - 5分で完了!最短手順
+- 📖 [INSTALLER_FAQ.md](installer/INSTALLER_FAQ.md) - よくある質問28選
 
 ---
 
