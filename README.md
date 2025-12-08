@@ -74,15 +74,89 @@ Map Analyzerは、Mapillary APIから大量のストリートビュー画像メ�
 - 📖 **[INSTALLER_FAQ.md](installer/INSTALLER_FAQ.md)** - よくある質問と回答
 - 📖 **[推奨スペック.md](推奨スペック.md)** - システム要件とパフォーマンスガイド
 
+### 🍎 macOSインストーラー
+**🎯 DMG形式で簡単インストール!**
+
+1. **[Releases](https://github.com/geomatsuyama/Maptag/releases)** から最新の `MapAnalyzer_v1.0.0_macOS.dmg` をダウンロード
+2. DMGファイルをダブルクリックしてマウント
+3. `Map Analyzer.app` を `Applications` フォルダにドラッグ
+4. DMGをイジェクト
+5. Launchpadから起動
+
+**システム要件**:
+- macOS 12 (Monterey) 以上
+- Apple Silicon (M1/M2/M3) または Intel プロセッサ
+- RAM: 8GB以上推奨
+- ディスク: 500MB以上の空き容量
+
+**特徴**:
+- ✅ ドラッグ&ドロップでインストール
+- ✅ macOS標準の配布形式
+- ✅ 管理者権限不要
+- ✅ ネイティブmacOSアプリ
+
+**📚 ドキュメント**:
+- 📖 **[installer/macos/create_dmg.sh](installer/macos/create_dmg.sh)** - DMG作成スクリプト (開発者向け)
+
+### 🐧 Linuxインストーラー (3形式)
+**🎯 お好みの形式を選択!**
+
+#### AppImage (推奨・最も簡単)
+1. **[Releases](https://github.com/geomatsuyama/Maptag/releases)** から `MapAnalyzer-1.0.0-x86_64.AppImage` をダウンロード
+2. 実行権限を付与: `chmod +x MapAnalyzer-1.0.0-x86_64.AppImage`
+3. 実行: `./MapAnalyzer-1.0.0-x86_64.AppImage`
+
+**特徴**:
+- ✅ インストール不要
+- ✅ すべてのLinuxディストリビューションで動作
+- ✅ 管理者権限不要
+- ✅ ポータブル実行
+
+#### Debian Package (.deb)
+```bash
+# Ubuntu/Debianでインストール
+sudo dpkg -i map-analyzer_1.0.0_amd64.deb
+sudo apt-get install -f
+
+# 起動
+map-analyzer
+```
+
+**特徴**:
+- ✅ システム統合 (アプリメニュー登録)
+- ✅ 依存関係の自動解決
+- ✅ `apt`で管理可能
+
+#### Snap Package
+```bash
+sudo snap install map-analyzer_1.0.0_amd64.snap --dangerous
+```
+
+**特徴**:
+- ✅ 自動更新
+- ✅ サンドボックスセキュリティ
+- ✅ Ubuntu App Store対応
+
+**システム要件 (共通)**:
+- Ubuntu 20.04+ / Debian 11+ / Fedora 35+ / その他Linux
+- RAM: 8GB以上推奨
+- ディスク: 500MB以上の空き容量
+
+**📚 ドキュメント**:
+- 📖 **[installer/linux/create_appimage.sh](installer/linux/create_appimage.sh)** - AppImage作成スクリプト
+- 📖 **[installer/linux/create_deb.sh](installer/linux/create_deb.sh)** - DEB作成スクリプト
+- 📖 **[installer/linux/create_snap.yaml](installer/linux/create_snap.yaml)** - Snap設定ファイル
+
+### 📚 全プラットフォーム対応ガイド
+- 📖 **[installer/BUILD_ALL_PLATFORMS.md](installer/BUILD_ALL_PLATFORMS.md)** - 全プラットフォーム向けビルドガイド (英語)
+- 📖 **[installer/全プラットフォーム_インストーラー作成ガイド.md](installer/全プラットフォーム_インストーラー作成ガイド.md)** - 完全日本語ガイド
+
 ### 🌐 Webバージョン
 **今すぐアクセス**: https://5060-i6w1gve4ssf8ly2hkqauq-02b9cc79.sandbox.novita.ai
 
 1. 設定でAPIキーを入力
 2. Mapillaryタブで検索実行
 3. 結果をエクスポート
-
-### 🛠️ ソースからビルド (Mac/Linux)
-詳細は [DESKTOP_BUILD_GUIDE.md](DESKTOP_BUILD_GUIDE.md) を参照
 
 ---
 
@@ -127,14 +201,14 @@ Map Analyzerは、Mapillary APIから大量のストリートビュー画像メ�
 
 ## 📱 対応プラットフォーム
 
-| プラットフォーム | 状態 | 配布方法 | 説明 |
-|-----------------|------|----------|------|
-| 🌐 Web | ✅ 動作中 | ブラウザで即座にアクセス | インストール不要 |
-| 🪟 Windows | ✅ インストーラー提供 | [Releases](https://github.com/geomatsuyama/Maptag/releases) | Windows 10以上 |
-| 🍎 macOS | 📦 ビルド可能 | ソースからビルド | macOS 12以上 |
-| 🐧 Linux | 📦 ビルド可能 | ソースからビルド | Ubuntu 20.04以上 |
-| 📱 Android | 🔜 予定 | - | - |
-| 🍏 iOS | 🔜 予定 | - | - |
+| プラットフォーム | 状態 | 配布方法 | インストーラー | サイズ |
+|-----------------|------|----------|---------------|--------|
+| 🌐 Web | ✅ 動作中 | ブラウザで即座にアクセス | 不要 | - |
+| 🪟 Windows | ✅ インストーラー提供 | [Releases](https://github.com/geomatsuyama/Maptag/releases) | `.exe` (Inno Setup) | 25-30MB |
+| 🍎 macOS | ✅ インストーラー提供 | [Releases](https://github.com/geomatsuyama/Maptag/releases) | `.dmg` (DMG) | 20-25MB |
+| 🐧 Linux | ✅ インストーラー提供 (3形式) | [Releases](https://github.com/geomatsuyama/Maptag/releases) | `.AppImage` / `.deb` / `.snap` | 23-35MB |
+| 📱 Android | 🔜 予定 | - | - | - |
+| 🍏 iOS | 🔜 予定 | - | - | - |
 
 ---
 
@@ -312,6 +386,8 @@ flutter run -d linux    # Linux
 ## 🗺️ ロードマップ
 
 - [x] ✅ **Windowsインストーラー対応** (v1.0.0)
+- [x] ✅ **macOSインストーラー対応 (DMG)** (v1.0.0)
+- [x] ✅ **Linuxインストーラー対応 (AppImage/DEB/Snap)** (v1.0.0)
 - [x] ✅ **地図上での検索エリア指定** (v1.0.0)
 - [x] ✅ **AI分析サンプルプレビュー** (v1.0.0)
 - [ ] Android/iOSモバイルアプリ版
@@ -325,47 +401,100 @@ flutter run -d linux    # Linux
 
 ## 📦 インストーラービルド (開発者向け)
 
-Windowsインストーラーを自分でビルドする場合:
+### 🪟 Windows インストーラー
 
-### 必要なツール
-- Flutter SDK 3.35.4以上
+**必要なツール:**
+- Flutter SDK 3.35.4+
 - Visual Studio 2022 (C++ desktop development)
 - Inno Setup 6 (無料): https://jrsoftware.org/isdl.php
 
-### ビルド手順 (Windows PCで実行)
-
-**ステップ1: Flutterアプリのビルド**
-```bash
+**ビルド手順:**
+```powershell
 git clone https://github.com/geomatsuyama/Maptag.git
 cd Maptag
-
-# 依存関係インストール
 flutter pub get
-
-# Windowsリリースビルド (5-10分)
 flutter build windows --release
-```
 
-**ステップ2: Inno Setupでインストーラー作成**
-
-**方法A: GUI (推奨・初心者向け)**
-1. Inno Setup Compiler を起動
-2. `File` → `Open` → `Maptag/installer/windows_installer.iss`
-3. `Build` → `Compile` (F9キー)
-4. 完了!
-
-**方法B: コマンドライン (自動化向け)**
-```powershell
-# PowerShellで実行
+# GUI: Inno Setup Compiler → installer/windows_installer.iss → Compile (F9)
+# CLI:
 & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "installer\windows_installer.iss"
 ```
 
-**出力先**: `installer/output/MapAnalyzer_Setup_v1.0.0_x64.exe` (約25-30MB)
+**出力**: `installer/output/MapAnalyzer_Setup_v1.0.0_x64.exe` (25-30MB)
 
-**🔍 詳細ドキュメント**:
+---
+
+### 🍎 macOS DMGインストーラー
+
+**必要なツール:**
+- Flutter SDK 3.35.4+
+- Xcode 14+
+- Homebrew + `create-dmg`
+
+**ビルド手順:**
+```bash
+brew install create-dmg
+git clone https://github.com/geomatsuyama/Maptag.git
+cd Maptag
+flutter pub get
+flutter build macos --release
+cd installer/macos
+./create_dmg.sh
+```
+
+**出力**: `installer/macos/output/MapAnalyzer_v1.0.0_macOS.dmg` (20-25MB)
+
+---
+
+### 🐧 Linux インストーラー (3形式)
+
+**必要なツール:**
+- Flutter SDK 3.35.4+
+- CMake, Ninja, GTK3開発ライブラリ
+
+```bash
+sudo apt-get install cmake ninja-build libgtk-3-dev
+```
+
+**ビルド手順:**
+
+**AppImage:**
+```bash
+git clone https://github.com/geomatsuyama/Maptag.git
+cd Maptag
+flutter pub get
+flutter build linux --release
+cd installer/linux
+./create_appimage.sh
+```
+**出力**: `installer/linux/output/MapAnalyzer-1.0.0-x86_64.AppImage` (23-28MB)
+
+**Debian Package:**
+```bash
+cd installer/linux
+./create_deb.sh
+```
+**出力**: `installer/linux/output/map-analyzer_1.0.0_amd64.deb` (23-28MB)
+
+**Snap Package:**
+```bash
+snapcraft
+```
+**出力**: `map-analyzer_1.0.0_amd64.snap` (30-35MB)
+
+---
+
+### 📚 詳細ドキュメント
+
+**Windows:**
 - 📖 [BUILD_INSTALLER.md](installer/BUILD_INSTALLER.md) - 完全ビルドガイド (自動化、トラブルシューティング)
 - 📖 [WINDOWS_INSTALLER_QUICK_START.md](installer/WINDOWS_INSTALLER_QUICK_START.md) - 5分で完了!最短手順
 - 📖 [INSTALLER_FAQ.md](installer/INSTALLER_FAQ.md) - よくある質問28選
+- 📖 [インストーラー作成手順_日本語.md](installer/インストーラー作成手順_日本語.md) - 日本語完全ガイド
+
+**全プラットフォーム:**
+- 📖 [BUILD_ALL_PLATFORMS.md](installer/BUILD_ALL_PLATFORMS.md) - 全プラットフォームビルドガイド (英語)
+- 📖 [全プラットフォーム_インストーラー作成ガイド.md](installer/全プラットフォーム_インストーラー作成ガイド.md) - 日本語完全ガイド
 
 ---
 

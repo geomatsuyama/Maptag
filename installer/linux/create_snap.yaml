@@ -1,0 +1,79 @@
+# Snap package configuration for Map Analyzer
+# Build with: snapcraft
+
+name: map-analyzer
+version: '1.0.0'
+summary: Mapillary API & Gemini AI Integration
+description: |
+  Map Analyzer integrates Mapillary street view images with Google Gemini AI
+  for advanced image analysis and GIS data export.
+  
+  **Features:**
+  * Mapillary image search (point+radius, bounding box, custom polygon)
+  * Gemini AI image analysis with custom prompts
+  * Export to JSON, Excel, CSV formats
+  * Full EXIF metadata support
+  * Free mode: 100 images/search
+  * Premium mode: 200,000 images/search
+  
+  **Requirements:**
+  * Mapillary API key (get from https://www.mapillary.com/developer)
+  * Gemini API key (get from https://makersuite.google.com/app/apikey)
+
+base: core22
+confinement: strict
+grade: stable
+architectures:
+  - build-on: amd64
+
+apps:
+  map-analyzer:
+    command: map_analyzer
+    extensions: [gnome]
+    plugs:
+      - home
+      - network
+      - network-bind
+      - desktop
+      - desktop-legacy
+      - wayland
+      - x11
+      - opengl
+      - removable-media
+
+parts:
+  flutter-app:
+    plugin: nil
+    source: ../..
+    override-build: |
+      # Install Flutter dependencies
+      flutter pub get
+      
+      # Build Linux release
+      flutter build linux --release
+      
+      # Copy build output to snap directory
+      cp -r build/linux/x64/release/bundle/* $SNAPCRAFT_PART_INSTALL/
+    
+    build-packages:
+      - curl
+      - git
+      - unzip
+      - xz-utils
+      - zip
+      - libglu1-mesa
+      - clang
+      - cmake
+      - ninja-build
+      - pkg-config
+      - libgtk-3-dev
+      - liblzma-dev
+    
+    stage-packages:
+      - libgtk-3-0
+      - libglu1-mesa
+      - libglib2.0-0
+
+layout:
+  /usr/lib/x86_64-linux-gnu/webkit2gtk-4.0:
+    bind: $SNAP/usr/lib/x86_64-linux-gnu/webkit2gtk-4.0
