@@ -44,14 +44,31 @@ Map Analyzerは、Mapillary APIから大量のストリートビュー画像メ�
 
 ## 🚀 クイックスタート
 
-### Webバージョン
+### 💻 Windowsインストーラー (推奨)
+**🎯 最も簡単な方法**: ワンクリックインストール!
+
+1. **[Releases](https://github.com/geomatsuyama/Maptag/releases)** から最新の `MapAnalyzer_Setup_v1.0.0.exe` をダウンロード
+2. インストーラーを実行
+3. Map Analyzerを起動
+
+**特徴**:
+- ✅ ワンクリックインストール
+- ✅ スタートメニュー登録
+- ✅ デスクトップショートカット
+- ✅ アンインストーラー付属
+
+**ドキュメント**:
+- 📖 [Windows_インストーラー_クイックスタート.md](Windows_インストーラー_クイックスタート.md) - 3ステップで完成!
+- 📖 [Windows_Installer_Guide.md](Windows_Installer_Guide.md) - 詳細ガイド
+
+### 🌐 Webバージョン
 **今すぐアクセス**: https://5060-i6w1gve4ssf8ly2hkqauq-02b9cc79.sandbox.novita.ai
 
 1. 設定でAPIキーを入力
 2. Mapillaryタブで検索実行
 3. 結果をエクスポート
 
-### デスクトップバージョン
+### 🛠️ ソースからビルド (Mac/Linux)
 詳細は [DESKTOP_BUILD_GUIDE.md](DESKTOP_BUILD_GUIDE.md) を参照
 
 ---
@@ -97,14 +114,14 @@ Map Analyzerは、Mapillary APIから大量のストリートビュー画像メ�
 
 ## 📱 対応プラットフォーム
 
-| プラットフォーム | 状態 | 説明 |
-|-----------------|------|------|
-| 🌐 Web | ✅ 動作中 | 即座にアクセス可能 |
-| 🪟 Windows | 📦 ビルド可能 | Windows 10以上 |
-| 🍎 macOS | 📦 ビルド可能 | macOS 12以上 |
-| 🐧 Linux | 📦 ビルド可能 | Ubuntu 20.04以上 |
-| 📱 Android | 🔜 予定 | - |
-| 🍏 iOS | 🔜 予定 | - |
+| プラットフォーム | 状態 | 配布方法 | 説明 |
+|-----------------|------|----------|------|
+| 🌐 Web | ✅ 動作中 | ブラウザで即座にアクセス | インストール不要 |
+| 🪟 Windows | ✅ インストーラー提供 | [Releases](https://github.com/geomatsuyama/Maptag/releases) | Windows 10以上 |
+| 🍎 macOS | 📦 ビルド可能 | ソースからビルド | macOS 12以上 |
+| 🐧 Linux | 📦 ビルド可能 | ソースからビルド | Ubuntu 20.04以上 |
+| 📱 Android | 🔜 予定 | - | - |
+| 🍏 iOS | 🔜 予定 | - | - |
 
 ---
 
@@ -281,13 +298,39 @@ flutter run -d linux    # Linux
 
 ## 🗺️ ロードマップ
 
+- [x] ✅ **Windowsインストーラー対応** (v1.0.0)
+- [x] ✅ **地図上での検索エリア指定** (v1.0.0)
+- [x] ✅ **AI分析サンプルプレビュー** (v1.0.0)
 - [ ] Android/iOSモバイルアプリ版
-- [ ] マップビューでのインタラクティブ検索
 - [ ] リアルタイムデータ同期
 - [ ] チーム共有機能
 - [ ] クラウドストレージ統合
 - [ ] カスタム分析テンプレート
 - [ ] 自動レポート生成
+
+---
+
+## 📦 インストーラービルド (開発者向け)
+
+Windowsインストーラーを自分でビルドする場合:
+
+### 必要なツール
+- Flutter SDK 3.35.4
+- Inno Setup 6 (無料): https://jrsoftware.org/isdl.php
+
+### ビルドコマンド
+```powershell
+# Windowsマシンで実行
+git clone https://github.com/geomatsuyama/Maptag.git
+cd Maptag
+
+# 自動ビルドスクリプト実行
+.\build_installer.ps1
+```
+
+**出力**: `installer_output\MapAnalyzer_Setup_v1.0.0.exe`
+
+詳細は [Windows_Installer_Guide.md](Windows_Installer_Guide.md) を参照してください。
 
 ---
 
