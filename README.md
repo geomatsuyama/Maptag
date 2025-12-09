@@ -21,7 +21,8 @@ Map Analyzerは、Mapillary APIから大量のストリートビュー画像メ�
 - **効率的な取得**: 画像本体をダウンロードせず、メタデータのみ取得
 
 ### 🤖 Gemini AI分析
-- 任意のプロンプトで画像を分析
+- **Mapillary画像分析**: 任意のプロンプトで画像を分析
+- **自分の画像をアップロード**: スマホ/PCから画像をアップロードして分析 🆕
 - クイックプロンプト機能搭載
 - バッチ処理対応
 
@@ -39,6 +40,12 @@ Map Analyzerは、Mapillary APIから大量のストリートビュー画像メ�
 ### 🎯 無料/有料モード
 - **無料モード**: 100枚/検索
 - **有料モード**: 200,000枚/検索
+
+### 🔔 自動アップデート通知 🆕
+- **起動時自動チェック**: GitHub Releasesから最新版を自動確認
+- **手動チェック**: 設定画面からいつでも確認可能
+- **リリースノート表示**: 新バージョンの変更内容を確認
+- **ワンクリック更新**: GitHub Releasesページへ直接移動
 
 ---
 
@@ -227,17 +234,42 @@ lib/
 │   └── app_settings.dart        # アプリ設定
 ├── services/                    # ビジネスロジック
 │   ├── mapillary_service.dart   # Mapillary API統合
-│   ├── gemini_service.dart      # Gemini AI統合
+│   ├── gemini_service.dart      # Gemini AI統合 (Base64対応 🆕)
+│   ├── update_service.dart      # GitHub更新チェック 🆕
 │   └── export_service.dart      # データエクスポート
 ├── providers/                   # 状態管理
 │   └── settings_provider.dart   # 設定プロバイダー
+├── widgets/                     # 再利用可能ウィジェット 🆕
+│   └── update_dialog.dart       # 更新通知ダイアログ
 └── screens/                     # UI画面
-    ├── home_screen.dart         # ホーム
-    ├── mapillary_search_screen.dart  # 検索
+    ├── home_screen.dart         # ホーム (自動更新チェック 🆕)
+    ├── mapillary_search_screen.dart  # Mapillary検索
+    ├── custom_image_analysis_screen.dart  # 画像アップロード分析 🆕
     ├── analysis_screen.dart     # AI分析
     ├── data_export_screen.dart  # エクスポート
-    └── settings_screen.dart     # 設定
+    └── settings_screen.dart     # 設定 (手動更新チェック 🆕)
 ```
+
+---
+
+## 📚 ドキュメント
+
+### 🆕 新機能ガイド
+- 📖 **[NEW_FEATURES_GUIDE.md](NEW_FEATURES_GUIDE.md)** - 新機能の詳細ガイド
+  - 自分の画像をアップロードしてAI分析
+  - 自動アップデート通知システム
+  - アップデートの反映方法
+  - FAQ とトラブルシューティング
+
+### インストーラー関連
+- 📖 **[ビルド不要_使い方ガイド.md](installer/ビルド不要_使い方ガイド.md)** - Flutter不要!初心者向けガイド
+- 📖 **[WINDOWS_INSTALLER_QUICK_START.md](installer/WINDOWS_INSTALLER_QUICK_START.md)** - Windowsクイックスタート
+- 📖 **[BUILD_INSTALLER.md](installer/BUILD_INSTALLER.md)** - インストーラービルド方法
+- 📖 **[INSTALLER_FAQ.md](installer/INSTALLER_FAQ.md)** - よくある質問
+
+### 開発者向け
+- 📖 **[DESKTOP_BUILD_GUIDE.md](DESKTOP_BUILD_GUIDE.md)** - デスクトップビルド手順
+- 📖 **[RELEASE_INSTRUCTIONS.md](RELEASE_INSTRUCTIONS.md)** - リリース手順
 
 ---
 
