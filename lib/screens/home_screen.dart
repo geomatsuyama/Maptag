@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/settings_provider.dart';
+import '../widgets/update_dialog.dart';
 import 'mapillary_search_screen.dart';
 import 'map_search_screen.dart';
 import 'analysis_screen.dart';
 import 'settings_screen.dart';
 import 'data_export_screen.dart';
+import 'custom_image_analysis_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -62,8 +64,22 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class HomeContentScreen extends StatelessWidget {
+class HomeContentScreen extends StatefulWidget {
   const HomeContentScreen({super.key});
+
+  @override
+  State<HomeContentScreen> createState() => _HomeContentScreenState();
+}
+
+class _HomeContentScreenState extends State<HomeContentScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Check for updates on app start
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showUpdateDialogIfAvailable(context);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -182,6 +198,22 @@ class HomeContentScreen extends StatelessWidget {
                 color: Colors.purple,
                 onTap: () {
                   // Navigate to Analysis tab
+                },
+              ),
+              const SizedBox(height: 12),
+
+              _FeatureCard(
+                icon: Icons.upload_file,
+                title: '自分の画像を分析',
+                description: 'スマホやPCから画像をアップロードしてAI分析',
+                color: Colors.orange,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CustomImageAnalysisScreen(),
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 12),

@@ -10,9 +10,13 @@ class GeminiService {
   Future<String> analyzeImage({
     required String imageUrl,
     required String prompt,
+    String? base64Image, // Optional: directly provide base64 image
   }) async {
     try {
       final url = '$baseUrl/models/gemini-1.5-flash:generateContent?key=$apiKey';
+
+      // Get image data (either from URL or base64)
+      final imageData = base64Image ?? await _getBase64ImageFromUrl(imageUrl);
 
       final requestBody = {
         'contents': [
@@ -22,7 +26,7 @@ class GeminiService {
               {
                 'inline_data': {
                   'mime_type': 'image/jpeg',
-                  'data': await _getBase64ImageFromUrl(imageUrl),
+                  'data': imageData,
                 }
               },
             ]

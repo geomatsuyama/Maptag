@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/settings_provider.dart';
 import '../services/mapillary_service.dart';
+import '../services/update_service.dart';
 import '../models/search_area.dart';
+import '../widgets/update_dialog.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -32,6 +34,105 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _mapillaryKeyController.dispose();
     _geminiKeyController.dispose();
     super.dispose();
+  }
+
+  Future<void> _checkForUpdates(BuildContext context) async {
+    // Show loading dialog
+    if (context.mounted) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 16),
+              Text('アップデートを確認中...'),
+            ],
+          ),
+        ),
+      );
+    }
+
+    try {
+      final updateService = UpdateService();
+      final updateInfo = await updateService.checkForUpdates();
+
+      // Close loading dialog
+      if (context.mounted) {
+        Navigator.of(context).pop();
+      }
+
+      if (updateInfo != null) {
+        // Show update dialog
+        if (context.mounted) {
+          showDialog(
+            context: context,
+            builder: (context) => UpdateDialog(
+              updateInfo: updateInfo,
+              onDismiss: () async {
+                await updateService.dismissUpdate(updateInfo.version);
+              },
+            ),
+          );
+        }
+      } else {
+        // No updates available
+        if (context.mounted) {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Row(
+                children: [
+                  Icon(Icons.check_circle, color: Colors.green.shade600),
+                  const SizedBox(width: 8),
+                  const Text('最新版です'),
+                ],
+              ),
+              content: Text(
+                'お使いのアプリは最新バージョン(v${UpdateService.currentVersion})です。',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      // Close loading dialog
+      if (context.mounted) {
+        Navigator.of(context).pop();
+      }
+
+      // Show error
+      if (context.mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Row(
+              children: [
+                Icon(Icons.error, color: Colors.red.shade600),
+                const SizedBox(width: 8),
+                const Text('確認失敗'),
+              ],
+            ),
+            content: Text(
+              'アップデートの確認に失敗しました。\n\nエラー: $e',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    }
   }
 
   Future<void> _testMapillaryConnection(BuildContext context) async {
@@ -342,6 +443,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               const SizedBox(height: 24),
+
+              // App Version & Update Check
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(Icons.info, color: Colors.blue),
+                          const SizedBox(width: 8),
+                          Text(
+                            'アプリバージョン',
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        'Version ${UpdateService.currentVersion}',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const SizedBox(height: 8),
+                      ElevatedButton.icon(
+                        onPressed: () => _checkForUpdates(context),
+                        icon: const Icon(Icons.system_update, size: 18),
+                        label: const Text('アップデートを確認'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
 
               // Info Section
               Card(
