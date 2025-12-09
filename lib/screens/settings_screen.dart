@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/settings_provider.dart';
+import '../services/mapillary_service.dart';
+import '../models/search_area.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -30,6 +32,125 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _mapillaryKeyController.dispose();
     _geminiKeyController.dispose();
     super.dispose();
+  }
+
+  Future<void> _testMapillaryConnection(BuildContext context) async {
+    final apiKey = _mapillaryKeyController.text.trim();
+    
+    if (apiKey.isEmpty) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please enter an API key first'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+      return;
+    }
+
+    // Show loading dialog
+    if (context.mounted) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 16),
+              Text('Testing Mapillary API...'),
+            ],
+          ),
+        ),
+      );
+    }
+
+    try {
+      // Test API with a simple request (Tokyo Station)
+      final service = MapillaryService(apiKey: apiKey);
+      final searchArea = SearchArea.pointRadius(
+        latitude: 35.6812,
+        longitude: 139.7671,
+        radiusMeters: 100,
+      );
+      
+      final results = await service.searchImages(
+        searchArea: searchArea,
+        limit: 5,
+      );
+
+      // Close loading dialog
+      if (context.mounted) {
+        Navigator.of(context).pop();
+      }
+
+      // Show result
+      if (context.mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.green.shade600),
+                const SizedBox(width: 8),
+                const Text('Connection Successful'),
+              ],
+            ),
+            content: Text(
+              'API key is valid!\n\nTest search found ${results.length} images near Tokyo Station.'
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      // Close loading dialog
+      if (context.mounted) {
+        Navigator.of(context).pop();
+      }
+
+      // Show error
+      if (context.mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Row(
+              children: [
+                Icon(Icons.error, color: Colors.red.shade600),
+                const SizedBox(width: 8),
+                const Text('Connection Failed'),
+              ],
+            ),
+            content: SingleChildScrollView(
+              child: Text(
+                'Failed to connect to Mapillary API.\n\n'
+                'Error: ${e.toString()}\n\n'
+                'Possible causes:\n'
+                '• Invalid API key\n'
+                '• Expired API key\n'
+                '• Network connection issues\n'
+                '• Mapillary service temporarily unavailable\n\n'
+                'Please check your API key at:\n'
+                'https://www.mapillary.com/developer',
+                style: const TextStyle(fontSize: 13),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -120,16 +241,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      ElevatedButton(
-                        onPressed: () async {
-                          await settingsProvider.updateMapillaryApiKey(_mapillaryKeyController.text);
-                          if (context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Mapillary API key saved')),
-                            );
-                          }
-                        },
-                        child: const Text('Save Mapillary Key'),
+                      Row(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () async {
+                              await settingsProvider.updateMapillaryApiKey(_mapillaryKeyController.text);
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Mapillary API key saved')),
+                                );
+                              }
+                            },
+                            child: const Text('Save Key'),
+                          ),
+                          const SizedBox(width: 8),
+                          ElevatedButton.icon(
+                            onPressed: () => _testMapillaryConnection(context),
+                            icon: const Icon(Icons.science, size: 16),
+                            label: const Text('Test'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.green,
+                              foregroundColor: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 8),
                       Text(

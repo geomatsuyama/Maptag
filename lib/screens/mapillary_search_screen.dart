@@ -35,6 +35,7 @@ class _MapillarySearchScreenState extends State<MapillarySearchScreen> {
   String? _errorMessage;
 
   @override
+  @override
   void dispose() {
     _latController.dispose();
     _lonController.dispose();
@@ -45,6 +46,17 @@ class _MapillarySearchScreenState extends State<MapillarySearchScreen> {
     _maxLatController.dispose();
     _polygonController.dispose();
     super.dispose();
+  }
+
+  void _loadTokyoExample() {
+    setState(() {
+      _latController.text = '35.6812';
+      _lonController.text = '139.7671';
+      _radiusController.text = '500';
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Loaded Tokyo coordinates')),
+    );
   }
 
   Future<void> _performSearch() async {
@@ -158,6 +170,16 @@ class _MapillarySearchScreenState extends State<MapillarySearchScreen> {
         _errorMessage = e.toString();
         _isSearching = false;
       });
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Search failed: ${e.toString()}'),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 5),
+          ),
+        );
+      }
     }
   }
 
@@ -368,14 +390,26 @@ class _MapillarySearchScreenState extends State<MapillarySearchScreen> {
                   ),
             ),
             const SizedBox(height: 12),
-            TextField(
-              controller: _latController,
-              decoration: const InputDecoration(
-                labelText: 'Latitude',
-                hintText: 'e.g., 35.6812',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.number,
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _latController,
+                    decoration: const InputDecoration(
+                      labelText: 'Latitude',
+                      hintText: 'e.g., 35.6812',
+                      border: OutlineInputBorder(),
+                    ),
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                IconButton(
+                  icon: const Icon(Icons.location_city),
+                  tooltip: 'Load Tokyo example',
+                  onPressed: _loadTokyoExample,
+                ),
+              ],
             ),
             const SizedBox(height: 12),
             TextField(

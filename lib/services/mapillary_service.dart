@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/mapillary_image.dart';
 import '../models/search_area.dart';
+import 'package:flutter/foundation.dart';
 
 class MapillaryService {
   static const String baseUrl = 'https://graph.mapillary.com';
@@ -26,16 +27,32 @@ class MapillaryService {
 
       // Pagination loop to handle large datasets (up to 200k images)
       while (nextUrl != null && totalFetched < limit) {
+        if (kDebugMode) {
+          debugPrint('🔍 Mapillary API Request: $nextUrl');
+          debugPrint('🔑 API Key (first 10 chars): ${apiKey.substring(0, apiKey.length > 10 ? 10 : apiKey.length)}...');
+        }
+        
         final response = await http.get(
           Uri.parse(nextUrl),
           headers: {
             'Authorization': 'OAuth $apiKey',
           },
         );
+        
+        if (kDebugMode) {
+          debugPrint('📥 Response Status: ${response.statusCode}');
+          if (response.statusCode != 200) {
+            debugPrint('❌ Error Response Body: ${response.body}');
+          }
+        }
 
         if (response.statusCode == 200) {
           final data = jsonDecode(response.body);
           final features = data['data'] as List?;
+          
+          if (kDebugMode) {
+            debugPrint('✅ Received ${features?.length ?? 0} images in this batch');
+          }
 
           if (features != null) {
             for (var feature in features) {
